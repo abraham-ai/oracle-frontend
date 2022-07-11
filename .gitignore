@@ -1,0 +1,11 @@
+packages
+**/node_modules
+.secret
+/node_modules
+/.pnp
+.pnp.js
+.env*
+npm-debug.log*
+package-lock.json
+config.json
+files/
