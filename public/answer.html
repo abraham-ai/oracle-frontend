@@ -24,24 +24,30 @@
          <div id="w-node-_69e69c14-b3c6-cac8-614c-fad663b503ce-ce1259c5" class="title">
             <h1 id="w-node-_85d5dbe0-affd-bbb5-268a-4e9c39edbce5-ce1259c5" class="heading answer-page">The Oracle has spoken...</h1>
          </div>
-         <div data-poster-url="files/spinning.jpg" data-autoplay="true" data-loop="true" data-wf-ignore="true" class="oracle-answer-video w-background-video w-background-video-atom">
-            <video id="51ccf89b-f7e9-da3b-55d8-30aa9e0fd5b7-video" autoplay="autoplay" loop="" style="background-image:url(&quot;files/oracleanswerbg.jpg&quot;)" playsinline="" data-wf-ignore="true" data-object-fit="cover">
-               <source id="videomp4" src="files/spinning.mp4" data-wf-ignore="true">
-               <!-- <source src="files/spinning.webm" data-wf-ignore="true"> -->
-            </video>
+         <div id="videocontainer" data-poster-url="files/spinning.jpg" data-autoplay="true" data-loop="true" data-wf-ignore="true" class="oracle-answer-video w-background-video w-background-video-atom">
          </div>
       </div>
       <div class="footer-dark wf-section">
          <div class="text-block-3 answer-page">&nbsp;<span class="text-span">&nbsp;&nbsp;</span> Follow the Oracle on Twitter <a href="https://twitter.com/TheOr4c13">>@TheOr4c13</a</div>
       </div>
       <script src="files/jquery-3.js" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-      <script>
-         const queryString = window.location.search;
-         const urlParams = new URLSearchParams(queryString);
-         const answer = urlParams.get('answer')
-         const video_id = urlParams.get('video')
-         var video_element = document.getElementById('videomp4');
-         video_element.setAttribute('src', 'https://minio.aws.abraham.fun/creations-stg/'+video_id);
+      <script defer>
+
+         function setAnswer() {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const answer = urlParams.get('answer')
+            const video_id = urlParams.get('video')
+            const minio_url = 'https://minio.aws.abraham.fun/creations-stg/'+video_id;
+            const video_element = document.getElementById('videocontainer');
+            const html = '<video id="51ccf89b-f7e9-da3b-55d8-30aa9e0fd5b7-video" autoplay="autoplay" loop="" style="background-image:url(&quot;files/oracleanswerbg.jpg&quot;)" playsinline="" data-wf-ignore="true" data-object-fit="cover"><source id="videomp4" src="'+minio_url+'" data-wf-ignore="true"></video>'
+            video_element.innerHTML = html;
+         }
+
+         window.onload = function() {
+            setTimeout(setAnswer, 500);
+         }
+            
       </script>
    </body>
 </html>
