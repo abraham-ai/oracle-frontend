@@ -77,9 +77,9 @@
       function mySubmitFunction(e) {
         e.preventDefault();
         document.getElementById("waitscreen").style.visibility='visible'
-        let prompt = document.getElementById("questionbox").value;
+        let question = document.getElementById("questionbox").value;
         socket.emit('submit_oracle', {
-          prompt: prompt
+          question: question
         });
         return false;
       }
