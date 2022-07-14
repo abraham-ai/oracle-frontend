@@ -24,7 +24,7 @@ io.on('connection', (socket) => {
   socket.on('submit_oracle', async (data) => {
     const creation_config = {
       "question": data.question,
-      "voice_embedding": "tts_files/rivka_embedding.pkl"
+      "voice_embedding": "data/rivka_embedding.pkl"
     }
     let results = await axios.post(`${generator_url}/run`, creation_config);
     const task_id = results.data.token;
