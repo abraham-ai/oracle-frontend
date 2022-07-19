@@ -22,16 +22,17 @@ io.on('connection', (socket) => {
   });
   
   socket.on('submit_oracle', async (data) => {
+    const faces = ["data/oracle.jpg", "data/oracle2.jpg", "data/oracle3.jpg"]
+    const faces_idx = Math.floor(Math.random() * faces.length);
     const creation_config = {
       "question": data.question,
-      "voice_embedding": "data/rivka_embedding.pkl"
+      "voice_embedding": "data/rivka_embedding.pkl",
+      "face": faces[faces_idx]
     }
     let results = await axios.post(`${generator_url}/run`, creation_config);
     const task_id = results.data.token;
     async function run_generator_update() {
       results = await axios.post(`${generator_url}/fetch`, {token: task_id});
-      console.log(results)
-      console.log(generator_url)
       if (results.data.status.status == 'complete') {
         let completion = results.data.output.completion;
         let sha = results.data.output.sha;
