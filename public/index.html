@@ -72,7 +72,8 @@
     <script>
       let socket = io.connect();
       socket.on('result', (output) => {
-        window.location.href = 'answer.html?video='+output.sha+'&answer='+output.completion;
+        let question = document.getElementById("questionbox").value;
+        window.location.href = 'answer.html?video='+output.sha+'&question='+question+'&answer='+output.completion;
       });
       function mySubmitFunction(e) {
         e.preventDefault();
