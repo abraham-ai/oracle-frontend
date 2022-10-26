@@ -73,7 +73,7 @@
             const answer = urlParams.get('answer')
             const question = urlParams.get('question')
             const video_id = urlParams.get('video')
-            const minio_url = 'https://minio.aws.abraham.fun/creations-stg/'+video_id;
+            const minio_url = 'https://minio.aws.abraham.fun/creations-prd/'+video_id;
             const video_element = document.getElementById('videocontainer');
             const html = '<video id="51ccf89b-f7e9-da3b-55d8-30aa9e0fd5b7-video" controls autoplay="autoplay" style="background-image:url(&quot;files/oracleanswerbg.jpg&quot;)" playsinline="" data-wf-ignore="true" data-object-fit="cover"><source id="videomp4" src="'+minio_url+'" data-wf-ignore="true"></video>';
             video_element.innerHTML = html;
