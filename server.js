@@ -36,6 +36,7 @@ app.post('/run', async (req, res) => {
     if (results.data.status.status == 'complete') {
       let completion = results.data.output.completion;
       let sha = results.data.output.sha;
+      console.log("Success, completion:", completion, "sha:", sha);
       res.status(200).send({
         completion: completion,
         sha: sha
