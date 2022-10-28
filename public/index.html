@@ -83,20 +83,26 @@
       </div>
 
     <script>
-      let socket = io.connect();
-      socket.on('result', (output) => {
-        let question = document.getElementById("questionbox").value;
-        window.location.href = 'answer.html?video='+output.sha+'&question='+question+'&answer='+output.completion;
-      });
+      
       function mySubmitFunction(e) {
         e.preventDefault();
         document.getElementById("waitscreen").style.visibility='visible'
         let question = document.getElementById("questionbox").value;
-        socket.emit('submit_oracle', {
-          question: question
-        });
+        
+        // make async HTTP post request which may take a while
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "https://app.dev.aws.abraham.fun/run", true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({question: question}));
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            let output = JSON.parse(xhr.responseText);
+            window.location.href = 'answer.html?video='+output.sha+'&question='+question+'&answer='+output.completion;
+          }
+        }
         return false;
       }
+
     </script>
   </body>
 </html>
