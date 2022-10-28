@@ -28,6 +28,7 @@ app.post('/run', async (req, res) => {
     "voice_embedding": "data/rivka_embedding.pkl",
     "face": faces[faces_idx]
   }
+  console.log(creation_config, generator_url);
   let results = await axios.post(`${generator_url}/run`, creation_config);
   const task_id = results.data.token;
   async function run_generator_update() {
@@ -40,15 +41,21 @@ app.post('/run', async (req, res) => {
         sha: sha
       });
       return;
+    } else if (results.data.status.status == 'failed') {
+      console.log("Generator failed");
+      res.status(500).send({
+        error: "there was an error"
+      });
+      return;
     }
-    setTimeout(function(){
-      run_generator_update();
-    }, 5000);
+    setTimeout(async () => {
+      await run_generator_update();
+    }, 3000);
   }    
   run_generator_update();    
 
 });
 
 server.listen(3000, () => {
-  console.log('listening on port 3000');
+  console.log('Oracle listening on port 3000');
 });
