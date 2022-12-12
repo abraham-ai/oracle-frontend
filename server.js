@@ -53,6 +53,8 @@ app.post('/run', async (req, res) => {
     "metadata": {"question": question} 
   }
 
+  console.log("REQUEST: ", question);
+
   response = await axios.post(GATEWAY_URL+'/request', request);
   let prediction_id = response.data;
   
@@ -69,18 +71,19 @@ app.post('/run', async (req, res) => {
     if (status == 'complete') {
       //let outputUrl = `${MINIO_URL}/${MINIO_BUCKET}/${output}`;
       console.log(`finished! result at ${output}`);
-      clearInterval(this);
-      return res.status(200).send({
+      res.status(200).send({
         completion: "",
         sha: output
       });
+      console.log(`sent ${output} to client`)
+      clearInterval(this);
     }
     else if (status == 'failed') {
       console.log("failed");
-      clearInterval(this);
-      return res.status(500).send({
+      res.status(500).send({
         error: "there was an error"
       });
+      clearInterval(this);
     }
   
   }, 2000);
