@@ -11,7 +11,7 @@ RUN python3 -m ensurepip
 RUN pip3 install --no-cache --upgrade pip setuptools
 
 # Install gdown
-RUN pip install gdown
+RUN pip3 install gdown
 RUN gdown --folder 1RmPGBn5qF5tveLlzGBtvXl-2x97Bilou -O public/files
 
 RUN yarn install --frozen-lockfile
