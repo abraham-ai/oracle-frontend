@@ -11,7 +11,7 @@ dotenv.config()
 const EDEN_API_KEY = process.env.EDEN_API_KEY;
 const EDEN_API_SECRET = process.env.EDEN_API_SECRET;
 
-const GATEWAY_URL = "https://app.dev.aws.abraham.fun"; //"https://gateway-test.abraham.ai";
+const GATEWAY_URL = "https://gateway-test.abraham.ai";
 //const MINIO_URL = "https://minio.aws.abraham.fun";
 //const MINIO_BUCKET = "creations-stg";
 
