@@ -37,6 +37,8 @@ app.post('/run', async (req, res) => {
     "face": faces[faces_idx]
   }
 
+  console.log("run", config);
+
   let authData = {
     "apiKey": EDEN_API_KEY, 
     "apiSecret": EDEN_API_SECRET
@@ -93,5 +95,5 @@ app.post('/fetch', async (req, res) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`Oracle listening on port ${PORT}`);
+  console.log(`Oracle is listening on port ${PORT}`);
 });
