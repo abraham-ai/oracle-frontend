@@ -88,13 +88,55 @@
         e.preventDefault();
         document.getElementById("waitscreen").style.visibility='visible'
         let question = document.getElementById("questionbox").value;
-        
+        const GATEWAY_URL = "https://gateway-test.abraham.ai";
+
         // make async HTTP post request which may take a while
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "https://oracle.eden.art/run", true);
+        xhr.open("POST", `${GATEWAY_URL}/run`, true);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(JSON.stringify({question: question}));
         xhr.onreadystatechange = function() {
+          console.log("status:", xhr.status);
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            let output = JSON.parse(xhr.responseText);
+            let prediction_id = output.prediction_id;
+            console.log("prediction_id:", prediction_id);    
+            
+            // start polling every 5 seconds
+            var interval = setInterval(function() {
+              console.log("POLL!")
+              var xhr2 = new XMLHttpRequest();
+              xhr2.open("POST", `${GATEWAY_URL}/fetch`, true);
+              xhr2.setRequestHeader('Content-Type', 'application/json');
+              xhr2.send(JSON.stringify({prediction_id: prediction_id}));
+              xhr2.onreadystatechange = function() {
+                if (xhr2.readyState == 4 && xhr2.status == 200) {
+                  let output2 = JSON.parse(xhr2.responseText);
+                  console.log("output2:", output2);
+                  if (output2.status == "complete") {
+                    clearInterval(interval);
+                    window.location.href = 'answer.html?video='+output2.sha+'&question='+question;
+                  }
+                }
+              }
+            }, 5000);
+            
+          }
+        }
+      }
+
+      function mySubmitFunction22(e) {
+        e.preventDefault();
+        document.getElementById("waitscreen").style.visibility='visible'
+        let question = document.getElementById("questionbox").value;
+        
+        // make async HTTP post request which may take a while
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "https://app2.dev.aws.abraham.fun/run", true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({question: question}));
+        xhr.onreadystatechange = function() {
+          console.log("status:", xhr.status);
           if (xhr.readyState == 4 && xhr.status == 200) {
             let output = JSON.parse(xhr.responseText);
             window.location.href = 'answer.html?video='+output.sha+'&question='+question+'&answer='+output.completion;
